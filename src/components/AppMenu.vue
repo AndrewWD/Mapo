@@ -18,22 +18,23 @@
 </template>
 
 <script>
+    import { mapGetters, mapActions } from 'vuex'
     export default {
-        computed: {
-            user() {
-                return this.$store.getters.user
-            },
-            userPicture() {
-                return this.$store.getters.userPicture
-            }
-        },
-        methods: {
-            centerOnUser() {
-                this.$store.dispatch('login')
-            },
-            logout() {
-                this.$store.dispatch('logout')
-            }
-        }
+        computed: mapGetters([
+            'user',
+            'userPicture'
+        ]),
+        methods: mapActions({
+            centerOnUser: 'login',
+            logout: 'logout'
+        })
+        // methods: {
+        //     centerOnUser() {
+        //         this.$store.dispatch('login')
+        //     },
+        //     logout() {
+        //         this.$store.dispatch('logout')
+        //     }
+        // }
     }
 </script>
