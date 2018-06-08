@@ -6,6 +6,7 @@ import router from './router'
 import * as filters from './filters'
 import store from './store'
 import { sync } from 'vuex-router-sync'
+import VueGoogleMaps from 'vue-googlemaps'
 
 //Integrate the router into the store
 sync(store, router)
@@ -17,6 +18,13 @@ for (const key in filters) {
 
 Vue.use(VueFetch, {
     baseUrl: 'http://localhost:3000/'
+})
+
+Vue.use(VueGoogleMaps, {
+    load: {
+        apiKey: 'AIzaSyDqhLEnV-SQ7-AKg_tQiMTsTmjVM3SUAqI',
+        libraries: ['places']
+    }
 })
 
 async function main() {
