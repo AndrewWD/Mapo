@@ -1,2 +1,18 @@
-# Mapo
-A web app for sharing locations. Build with Vue.js 
+# mapo
+
+> A web app for sharing locations
+
+## Build Setup
+
+``` bash
+# install dependencies
+npm install
+
+# serve with hot reload at localhost:8080
+npm run dev
+
+# build for production with minification
+npm run build
+```
+
+For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
