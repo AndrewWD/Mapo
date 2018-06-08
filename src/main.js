@@ -5,6 +5,10 @@ import App from './components/App.vue'
 import router from './router'
 import * as filters from './filters'
 import store from './store'
+import { sync } from 'vuex-router-sync'
+
+//Integrate the router into the store
+sync(store, router)
 
 //Filters
 for (const key in filters) {
@@ -12,10 +16,11 @@ for (const key in filters) {
 }
 
 Vue.use(VueFetch, {
-    baseUrl: 'http://localhost:3000'
+    baseUrl: 'http://localhost:3000/'
 })
 
-function main() {
+async function main() {
+    await store.dispatch('init')
     new Vue({
         el: '#app',
         ...App,
