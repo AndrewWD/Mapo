@@ -4,6 +4,7 @@ import VueFetch, { $fetch } from './plugins/fetch'
 import App from './components/App.vue'
 import router from './router'
 import * as filters from './filters'
+import store from './store'
 
 //Filters
 for (const key in filters) {
@@ -18,7 +19,8 @@ function main() {
     new Vue({
         el: '#app',
         ...App,
-        router
+        router,
+        store
     })
 }
 
