@@ -1,19 +1,20 @@
-<template>
-    <div class="geo-blog">
-        <app-menu></app-menu>
-        <div class="panes">
-             <blog-map></blog-map>
-        </div>
-    </div>
-</template>
-
 <script>
     import AppMenu from './AppMenu.vue'
     import BlogMap from './BlogMap.vue'
+    import BlogContent from './content/BlogContent.vue'
     export default {
-        components: {
-            AppMenu,
-            BlogMap
+        render(h) {
+            return <div class="geo-blog">
+                <AppMenu></AppMenu>
+                <div class="panes">
+                    <BlogMap></BlogMap>
+                    <BlogContent></BlogContent>
+                </div>
+            </div>
         }
+        // components: {
+        //     AppMenu,
+        //     BlogMap
+        // }
     }
 </script>

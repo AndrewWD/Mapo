@@ -37,5 +37,30 @@ export default {
         updateDraft(state, value) {
             Object.assign(state.draft, value)
         }
+    },
+    actions: {
+        clearDraft({ commit }) {
+            commit('draft', null)
+        },
+        createDraft({ commit }) {
+            commit('draft', {
+                title: '',
+                content: '',
+                position: null,
+                placeId: null
+            })
+        },
+        setDraftLocation({ dispatch, getters }, { position, placeId }){
+            if (!getters.draft) {
+                dispatch('createDraft')
+            } 
+            dispatch('updateDraft', {
+                position,
+                placeId
+            })
+        },
+        updateDraft({ dispatch, commit, getters }, draft) {
+            commit('updateDraft', draft)
+        }
     }
 }
