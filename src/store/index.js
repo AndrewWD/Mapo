@@ -56,7 +56,6 @@ const store = new Vuex.Store({
                     wantedRoute: router.currentRoute.fullPath
                 } })
             }
-            dispatch('posts/logout')
         }
     },
     modules: {

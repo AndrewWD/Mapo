@@ -102,11 +102,14 @@ export default {
                 }
             }
         },
-        logout({ commit }) {
-            commit('posts', {
-                posts: [],
-                mapBounds: null
-            })
+        logout: {
+            handler({ commit }) {
+                commit('posts', {
+                    posts: [],
+                    mapBounds: null
+                })
+            },
+            root: true 
         }
     }
 }
