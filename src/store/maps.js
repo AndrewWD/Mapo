@@ -47,6 +47,13 @@ export default {
             if (position) {
                 dispatch('setCenter', position)
             }
+        },
+        setBounds({ dispatch }, value) {
+            dispatch('posts/fetchPosts', {
+                mapBounds: value
+            }, {
+                root: true
+            })
         }
     }
 }

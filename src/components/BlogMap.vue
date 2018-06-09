@@ -1,12 +1,14 @@
 <template>
     <div class="blog-map">
         <googlemaps-map
+            ref="map"
             :center="center"
             :zoom="zoom"
             :options="mapOptions"
             @update:center="setCenter"
             @update:zoom="setZoom"
-            @click='onMapClick'>
+            @click='onMapClick'
+            @idle="onIdle">
             <googlemaps-user-position
                 @update:position="setUserPosition">
             </googlemaps-user-position>
@@ -59,7 +61,8 @@
             ...mapsActions([
                 'setCenter',
                 'setZoom',
-                'setUserPosition'
+                'setUserPosition',
+                'setBounds'
             ]),
 
             ...postsActions([
@@ -70,6 +73,9 @@
                     position: event.latLng,
                     placeId: event.placeId
                 })
+            },
+            onIdle() {
+                this.setBounds(this.$refs.map.getBounds())
             }
 
         }
