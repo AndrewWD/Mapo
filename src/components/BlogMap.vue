@@ -24,6 +24,19 @@
                 :position="draft.position"
                 :z-index="6">
             </googlemaps-marker>
+            <googlemaps-marker
+                v-for="post of posts"
+                :key="post._id"
+                :label="{
+                    color: post === currentPost ? 'white' : 'black',
+                    fontFamily: 'Material Icons',
+                    fontSize: '20px',
+                    text: 'face'
+                }"
+                :position="post.position"
+                :z-index="5"
+                @click="selectPost(post._id)">
+            </googlemaps-marker>
         </googlemaps-map>
     </div>
 </template>
@@ -49,7 +62,9 @@
                 'zoom',
             ]),
             ...postsGetters([
-                'draft'
+                'draft',
+                'posts',
+                'currentPost'
             ]),
             mapOptions() {
                 return {
@@ -66,7 +81,8 @@
             ]),
 
             ...postsActions([
-                'setDraftLocation'
+                'setDraftLocation',
+                'selectPost'
             ]),
             onMapClick(event) {
                 this.setDraftLocation({

@@ -101,6 +101,12 @@ export default {
                     })
                 }
             }
+        },
+        logout({ commit }) {
+            commit('posts', {
+                posts: [],
+                mapBounds: null
+            })
         }
     }
 }
