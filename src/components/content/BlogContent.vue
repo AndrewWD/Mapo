@@ -16,15 +16,15 @@
             ...postsGetters([
                 'draft',
                 'currentPost'
-            ])
-        },
-        cssClass() {
-            return [
-                'blog-content',
-                {
-                    'has-content': this.currentPost
-                }
-            ]
+            ]),
+            cssClass() {
+                return [
+                    'blog-content',
+                    {
+                        'has-content': this.currentPost
+                    }
+                ]
+            },
         },
         render(h) {
             let Content 

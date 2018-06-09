@@ -13,14 +13,17 @@ export default {
             // Posts fetched in those map bounds
             posts: [],
             // ID of the selected post
-            selectedPostId: null
+            selectedPostId: null,
+            //Fetched details for the selected post
+            selectedPostDetails: null
         }
     },
     getters: {
         draft: state => state.draft,
         posts: state => state.posts,
         selectedPost: state => state.posts.find(p => p._id === state.selectedPostId),
-        currentPost: (state, getters) => state.draft || getters.selectedPost
+        currentPost: (state, getters) => state.draft || getters.selectedPost,
+        selectedPostDetails: state => state.selectedPostDetails
     },
     mutations: {
         addPost(state, value) {
@@ -38,6 +41,9 @@ export default {
         },
         updateDraft(state, value) {
             Object.assign(state.draft, value)
+        },
+        selectedPostDetails(state, value) {
+            state.selectedPostDetails = value
         }
     },
     actions: {
@@ -80,7 +86,13 @@ export default {
             dispatch('selectPost', result._id)
         },
         async selectPost({ commit }, id) {
+            commit('selectedPostDetails', null)
             commit('selectedPostId', id)
+            const details = await $fetch(`posts/${id}`)
+            commit('selectedPostDetails', details)
+        },
+        unselectPost({ commit }) {
+            commit('selectedPostId', null)
         },
         async fetchPosts({ commit, state }, { mapBounds, force}) {
             let oldBounds = state.mapBounds
@@ -110,6 +122,20 @@ export default {
                 })
             },
             root: true 
+        },
+        loggedIn: {
+            handler({ dispatch, state }) {
+                if (state.mapBounds) {
+                    dispatch('fetchPosts', {
+                        mapBounds: state.mapBounds,
+                        force: true
+                    })
+                }
+                if(state.selectPostId) {
+                    dispatch('selectPost', state.selectedPostId)
+                }
+            },
+            root: true
         }
     }
 }
