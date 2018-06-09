@@ -1,3 +1,4 @@
+import { $fetch } from '../plugins/fetch'
 export default {
     namespaced: true,
 
@@ -61,6 +62,24 @@ export default {
         },
         updateDraft({ dispatch, commit, getters }, draft) {
             commit('updateDraft', draft)
+        },
+        async createPost ({ commit, dispatch }, draft) {
+            const data = {
+                ...draft,
+                // We need to get the object form 
+                position: draft.position.toJSON()
+            }
+
+            const result = await $fetch('posts/new', {
+                method: 'POST',
+                body: JSON.stringify(data)
+            })
+            dispatch('clearDraft')
+            commit('addPost', result)
+            dispatch('selectPost', result._id)
+        },
+        async selectPost({ commit }, id) {
+            commit('selectedPostId', id)
         }
     }
 }
