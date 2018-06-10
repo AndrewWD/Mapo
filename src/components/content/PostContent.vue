@@ -14,12 +14,30 @@
                 </span>
             </div>
             <div class="content">{{ details.content }}</div>
+            <div class="comments">
+                <Comment
+                    v-for="(comment, index) of details.comments"
+                    :key="index"
+                    :comment="comment">
+                </Comment>
+            </div>
             <div class="actions">
                 <button
                     type="button"
                     class="icon-button secondary"
                     @click="unselectPost">
                     <i class="material-icons">close</i>
+                </button>
+                <input
+                    v-model="commentContent"
+                    placeholder="Type a comment"
+                    @keyup.enter="submitComment">
+                <button
+                    type="button"
+                    class="icon-button"
+                    @click="submitComment"
+                    :disabled="!commentFormValid">
+                    <i class="material-icons">send</i>
                 </button>
             </div>
         </template>
@@ -31,6 +49,7 @@
 
 <script>
     import { createNamespacedHelpers } from 'vuex'
+    import Comment from './Comment.vue'
 
     const {
         mapGetters: postsGetters,
@@ -38,16 +57,39 @@
     } = createNamespacedHelpers('posts')
 
     export default {
+        components: {
+            Comment
+        },
+        data() {
+            return {
+                commentContent: ''
+            }
+        },
         computed: {
             ...postsGetters({
                 details: 'selectedPostDetails'
-            })
+            }),
+            commentFormValid() {
+                return this.commentContent
+            }
         },
 
         methods: {
             ...postsActions([
+                'sendComment',
                 'unselectPost'
-            ])
+            ]),
+            async submitComment() {
+                if(this.commentFormValid) {
+                    this.sendComment({
+                        post: this.details,
+                        comment: {
+                            content: this.commentContent
+                        }
+                    })
+                    this.commentContent = ''
+                }
+            } 
         }
     }
 </script>
